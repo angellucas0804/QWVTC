@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_portada"
+        android:layout_width="match_parent"
+        android:layout_height="156dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/avatar_m"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/iv_portada" />
+
+    <TextView
+        android:id="@+id/tv_pregunta"
+        android:layout_width="match_parent"
+        android:layout_height="136dp"
+        android:background="#388E3C"
+        android:gravity="center|start"
+        android:padding="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="82dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_numero_pregunta"
+        app:layout_constraintTop_toTopOf="@+id/tv_numero_pregunta"
+        tools:text="¿Observas si las personas que entregan los alimentos tienen las manos limpias y uñas cortas?" />
+
+    <TextView
+        android:id="@+id/tv_numero_pregunta"
+        android:layout_width="60dp"
+        android:layout_height="152dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#FFECB3"
+        android:gravity="center_horizontal"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="#00796B"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        tools:text="12" />
+
+    <RadioGroup
+        android:id="@+id/rg_respuestas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_pregunta">
+
+        <RadioButton
+            android:id="@+id/rb_respuesta_si"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/btn_radio_custom"
+            android:button="@android:color/transparent"
+            android:drawableTop="@drawable/avatar_m"
+            android:gravity="center"
+            android:textSize="24sp"
+            tools:text="SI" />
+
+        <RadioButton
+            android:id="@+id/rb_respuesta_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/btn_radio_custom"
+            android:button="@android:color/transparent"
+            android:drawableTop="@drawable/avatar_m"
+            android:gravity="center"
+            android:textSize="24sp"
+            tools:text="NO" />
+
+    </RadioGroup>
+
+
+</android.support.constraint.ConstraintLayout>

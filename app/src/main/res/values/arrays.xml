@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gradoPrimaria">
+        <item>Seleccionar</item>
+        <item>1ro</item>
+        <item>2do</item>
+        <item>3ro</item>
+        <item>4to</item>
+        <item>5to</item>
+        <item>6to</item>
+    </string-array>
+    <string-array name="gradoSecundaria">
+        <item>Seleccionar</item>
+        <item>1ro</item>
+        <item>2do</item>
+        <item>3ro</item>
+        <item>4to</item>
+        <item>5to</item>
+    </string-array>
+    <string-array name="nivel">
+        <item>Seleccionar</item>
+        <item>Primaria</item>
+        <item>Secundaria</item>
+    </string-array>
+    <string-array name="sexo">
+        <item>Seleccionar</item>
+        <item>Masculino</item>
+        <item>Femenino</item>
+    </string-array>
+    <string-array name="turno">
+        <item>Seleccionar</item>
+        <item>Mañana</item>
+        <item>Tarde</item>
+    </string-array>
+</resources>
