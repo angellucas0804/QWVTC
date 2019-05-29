@@ -1,0 +1,205 @@
+{
+  "id": "2d682f67-e0b3-4e4c-8515-3d2e3871bed2",
+  "nombre": "Alimentos",
+  "version": 1,
+  "preguntas": [
+    {
+      "id": "43ec0e3d-9970-4190-8da2-ff9a0f3d15f6",
+      "orden": 1,
+      "portada": "qw_portada",
+      "texto": "¿Les sirven los alimentos de Qali Warma antes del inicio de clases?",
+      "respuestas": [
+        {
+          "imagen": "agree",
+          "valor": 1,
+          "texto": "Si"
+        },
+        {
+          "imagen": "disagree",
+          "valor": 2,
+          "texto": "No"
+        }
+      ]
+    },
+    {
+      "id": "1739b02c-e722-448e-ac87-e5a4455aa175",
+      "orden": 2,
+      "portada": "qw_portada",
+        "texto": "¿Tú y tus compañeras(os) comen los alimentos de Qali Warma fuera del aula/comedor?",
+      "respuestas": [
+        {
+          "imagen": "agree",
+          "valor": 1,
+          "texto": "Si"
+        },
+        {
+          "imagen": "disagree",
+          "valor": 2,
+          "texto": "No"
+        }
+      ]
+    },
+    {
+      "id": "9be77ce8-f09c-4bb1-90dc-10ca15a1b7c5",
+      "orden": 3,
+      "portada": "qw_portada",
+      "texto": "¿Hoy les dieron los alimentos de Qali Warma que debían entregar?",
+      "respuestas": [
+        {
+          "imagen": "agree",
+          "valor": 1,
+          "texto": "Si"
+        },
+        {
+          "imagen": "disagree",
+          "valor": 2,
+          "texto": "No"
+        }
+      ]
+    },
+    {
+      "id": "eb7eb412-6baa-4dfa-9ae9-c1bd342347c8",
+      "orden": 4,
+      "portada": "qw_portada",
+      "texto": "¿Las personas que entregan los alimentos tienen las manos limpias y uñas cortas?",
+      "respuestas": [
+        {
+          "imagen": "agree",
+          "valor": 1,
+          "texto": "Si"
+        },
+        {
+          "imagen": "disagree",
+          "valor": 2,
+          "texto": "No"
+        }
+      ]
+    },
+    {
+      "id": "d33b03bf-f430-4f37-856a-0a2c3d21fa5a",
+      "orden": 5,
+      "portada": "qw_portada",
+      "texto": "¿Tú y tus compañeras(os) se lavan las manos antes de comer los alimentos?",
+      "respuestas": [
+        {
+          "imagen": "agree",
+          "valor": 1,
+          "texto": "Si"
+        },
+        {
+          "imagen": "disagree",
+          "valor": 2,
+          "texto": "No"
+        }
+      ]
+    },
+    {
+      "id": "626071d5-f8ae-4a57-875e-123893f18f07",
+      "orden": 6,
+      "portada": "qw_portada",
+      "texto": "¿Se usa el tacho CON TAPA para arrojar los residuos luego de comer los alimentos?",
+      "respuestas": [
+        {
+          "imagen": "agree",
+          "valor": 1,
+          "texto": "Si"
+        },
+        {
+          "imagen": "disagree",
+          "valor": 2,
+          "texto": "No"
+        }
+      ]
+    },
+    {
+      "id": "69905018-112f-42f4-8dbe-4d26dabebea1",
+      "orden": 7,
+      "portada": "qw_portada",
+      "texto": "¿Tú y tus compañeras(os) se lavan las manos después de comer los alimentos?",
+      "respuestas": [
+        {
+          "imagen": "agree",
+          "valor": 1,
+          "texto": "Si"
+        },
+        {
+          "imagen": "disagree",
+          "valor": 2,
+          "texto": "No"
+        }
+      ]
+    },
+    {
+      "id": "de2c5026-313b-4946-baa4-d08572311cb7",
+      "orden": 8,
+      "portada": "qw_portada",
+      "texto": "¿Tú y TODOS tus compañeras(os) de aula comieron TODOS los alimentos de Qali Warma?",
+      "respuestas": [
+        {
+          "imagen": "agree",
+          "valor": 1,
+          "texto": "Si"
+        },
+        {
+          "imagen": "disagree",
+          "valor": 2,
+          "texto": "No"
+        }
+      ]
+    },
+    {
+      "id": "643ec82b-71d3-44ce-9560-95d4f4c2e16e",
+      "orden": 9,
+      "portada": "qw_portada",
+      "texto": "¿Hay alimentos que entrega Qali Warma que NO LES GUSTA?",
+      "respuestas": [
+        {
+          "imagen": "agree",
+          "valor": 1,
+          "texto": "Si"
+        },
+        {
+          "imagen": "disagree",
+          "valor": 2,
+          "texto": "No"
+        }
+      ]
+    },
+    {
+      "id": "435a32ee-bcd9-475f-b62c-5a11cd8e40ff",
+      "orden": 10,
+      "portada": "qw_portada",
+      "texto": "¿Alguno de tus compañeras(os) se llevó a su casa los alimentos de Qali Warma?",
+      "respuestas": [
+        {
+          "imagen": "agree",
+          "valor": 1,
+          "texto": "Si"
+        },
+        {
+          "imagen": "disagree",
+          "valor": 2,
+          "texto": "No"
+        }
+      ]
+    },
+    {
+      "id": "0964620c-78dd-4a30-a4cc-813ac18b1d74",
+      "orden": 11,
+      "portada": "qw_portada",
+      "texto": "¿Se encontró algún alimento de Qali Warma en mal estado cuando estaban comiendo?",
+      "respuestas": [
+        {
+          "imagen": "agree",
+          "valor": 1,
+          "texto": "Si"
+        },
+        {
+          "imagen": "disagree",
+          "valor": 2,
+          "texto": "No"
+        }
+      ]
+    }
+  ]
+}

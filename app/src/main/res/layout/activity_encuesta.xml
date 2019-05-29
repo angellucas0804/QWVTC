@@ -9,24 +9,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_encuesta"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/ll_dots"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <LinearLayout
-        android:id="@+id/ll_dots"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@android:color/white"
-        android:gravity="center|top"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/btn_next" />
-
-    <Button
-        android:id="@+id/btn_next"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="NEXT"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

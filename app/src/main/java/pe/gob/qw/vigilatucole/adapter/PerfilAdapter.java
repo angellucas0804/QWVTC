@@ -16,10 +16,12 @@ import pe.gob.qw.vigilatucole.AgregarEditarPerfilActivity;
 import pe.gob.qw.vigilatucole.EncuestaActivity;
 import pe.gob.qw.vigilatucole.R;
 import pe.gob.qw.vigilatucole.data.Alumno;
+import pe.gob.qw.vigilatucole.model.Encuesta;
 import pe.gob.qw.vigilatucole.util.ItemAnimation;
 
 public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.ViewHolder> {
 
+    private Encuestalistener encuestalistener;
     private Context context;
     private List<Alumno> alumnos;
     private int animation;
@@ -57,9 +59,13 @@ public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.ViewHolder
         viewHolder.cv_alumno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, EncuestaActivity.class)
-                        .putExtra("KET_ENCUESTA",String.valueOf(alumno.getId()));
-                context.startActivity(intent);
+
+                if (encuestalistener != null){
+                    encuestalistener.setItme(alumno);
+                }
+
+
+
             }
         });
         setAnimation(viewHolder.itemView, i);
@@ -119,6 +125,15 @@ public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.ViewHolder
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    public void setlistener(Encuestalistener encuestalistener){
+        this.encuestalistener = encuestalistener;
+    }
+
+    public interface Encuestalistener{
+
+        void setItme(Alumno alumno);
     }
 
 

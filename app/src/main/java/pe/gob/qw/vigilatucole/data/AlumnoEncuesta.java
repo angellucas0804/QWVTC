@@ -12,70 +12,43 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity(nameInDb = "AlumnoEncuesta")
 public class AlumnoEncuesta {
 
-    @Id(autoincrement = true)
-    private Long id;
-    @SerializedName("alumnoId")
-    @Property(nameInDb = "alumnoId")
-    private int alumnoId;
-    @SerializedName("inIdAlumnoEncuesta")
-    @Property(nameInDb = "inIdAlumnoEncuesta")
-    private int inIdAlumnoEncuesta;
-    @SerializedName("inIdPregunta")
-    @Property(nameInDb = "inIdPregunta")
-    private int inIdPregunta;
-    @SerializedName("inRespuestaOpcion")
-    @Property(nameInDb = "inRespuestaOpcion")
-    private int inRespuestaOpcion;
-    @SerializedName("nvDetalleRespuesta")
-    @Property(nameInDb = "nvDetalleRespuesta")
-    private String nvDetalleRespuesta;
-    @Generated(hash = 773329838)
-    public AlumnoEncuesta(Long id, int alumnoId, int inIdAlumnoEncuesta,
-            int inIdPregunta, int inRespuestaOpcion, String nvDetalleRespuesta) {
-        this.id = id;
-        this.alumnoId = alumnoId;
-        this.inIdAlumnoEncuesta = inIdAlumnoEncuesta;
-        this.inIdPregunta = inIdPregunta;
-        this.inRespuestaOpcion = inRespuestaOpcion;
-        this.nvDetalleRespuesta = nvDetalleRespuesta;
+    @SerializedName("alumno_id")
+    @Property(nameInDb = "alumno_id")
+    private Long alumno_id;
+    @SerializedName("encuesta_id")
+    @Property(nameInDb = "encuesta_id")
+    private int encuesta_id;
+    @SerializedName("fecha_encuesta")
+    @Property(nameInDb = "fecha_encuesta")
+    private String fecha_encuesta;
+    @Generated(hash = 360717551)
+    public AlumnoEncuesta(Long alumno_id, int encuesta_id, String fecha_encuesta) {
+        this.alumno_id = alumno_id;
+        this.encuesta_id = encuesta_id;
+        this.fecha_encuesta = fecha_encuesta;
     }
     @Generated(hash = 1863037062)
     public AlumnoEncuesta() {
     }
-    public Long getId() {
-        return this.id;
+    public Long getAlumno_id() {
+        return this.alumno_id;
     }
-    public void setId(Long id) {
-        this.id = id;
+    public void setAlumno_id(Long alumno_id) {
+        this.alumno_id = alumno_id;
     }
-    public int getAlumnoId() {
-        return this.alumnoId;
+    public int getEncuesta_id() {
+        return this.encuesta_id;
     }
-    public void setAlumnoId(int alumnoId) {
-        this.alumnoId = alumnoId;
+    public void setEncuesta_id(int encuesta_id) {
+        this.encuesta_id = encuesta_id;
     }
-    public int getInIdAlumnoEncuesta() {
-        return this.inIdAlumnoEncuesta;
+    public String getFecha_encuesta() {
+        return this.fecha_encuesta;
     }
-    public void setInIdAlumnoEncuesta(int inIdAlumnoEncuesta) {
-        this.inIdAlumnoEncuesta = inIdAlumnoEncuesta;
+    public void setFecha_encuesta(String fecha_encuesta) {
+        this.fecha_encuesta = fecha_encuesta;
     }
-    public int getInIdPregunta() {
-        return this.inIdPregunta;
-    }
-    public void setInIdPregunta(int inIdPregunta) {
-        this.inIdPregunta = inIdPregunta;
-    }
-    public int getInRespuestaOpcion() {
-        return this.inRespuestaOpcion;
-    }
-    public void setInRespuestaOpcion(int inRespuestaOpcion) {
-        this.inRespuestaOpcion = inRespuestaOpcion;
-    }
-    public String getNvDetalleRespuesta() {
-        return this.nvDetalleRespuesta;
-    }
-    public void setNvDetalleRespuesta(String nvDetalleRespuesta) {
-        this.nvDetalleRespuesta = nvDetalleRespuesta;
-    }
+
+
+
 }

@@ -45,13 +45,10 @@ public class Alumno  {
     @SerializedName("lngPuntaje")
     @Property(nameInDb = "lngPuntaje")
     private Long lngPuntaje;
-    @SerializedName("dtFecha")
-    @Property(nameInDb = "dtFecha")
-    private Date dtFecha;
-    @Generated(hash = 849839595)
+    @Generated(hash = 1492985648)
     public Alumno(Long id, String chCodModular, String nvColegio, String nvNombres,
             String nvApePatMat, int inSexo, boolean biMunicipio, int inGrado,
-            int inNivel, int inTurno, Long lngPuntaje, Date dtFecha) {
+            int inNivel, int inTurno, Long lngPuntaje) {
         this.id = id;
         this.chCodModular = chCodModular;
         this.nvColegio = nvColegio;
@@ -63,7 +60,6 @@ public class Alumno  {
         this.inNivel = inNivel;
         this.inTurno = inTurno;
         this.lngPuntaje = lngPuntaje;
-        this.dtFecha = dtFecha;
     }
     @Generated(hash = 721709040)
     public Alumno() {
@@ -134,11 +130,6 @@ public class Alumno  {
     public void setLngPuntaje(Long lngPuntaje) {
         this.lngPuntaje = lngPuntaje;
     }
-    public Date getDtFecha() {
-        return this.dtFecha;
-    }
-    public void setDtFecha(Date dtFecha) {
-        this.dtFecha = dtFecha;
-    }
+
 
 }

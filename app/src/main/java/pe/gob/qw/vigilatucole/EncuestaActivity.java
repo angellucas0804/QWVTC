@@ -1,31 +1,45 @@
 package pe.gob.qw.vigilatucole;
 
-import android.graphics.PorterDuff;
+import android.content.Context;
+import android.net.Uri;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import pe.gob.qw.vigilatucole.adapter.ViewPagerAdapter;
 import pe.gob.qw.vigilatucole.application.App;
+import pe.gob.qw.vigilatucole.application.BaseActivity;
 import pe.gob.qw.vigilatucole.data.DaoSession;
+import pe.gob.qw.vigilatucole.fragment.EncuestaFragment;
+import pe.gob.qw.vigilatucole.fragment.FinEncuestaFragment;
+import pe.gob.qw.vigilatucole.model.Encuesta;
+import pe.gob.qw.vigilatucole.model.Pregunta;
+import pe.gob.qw.vigilatucole.model.Respuesta;
 
-public class EncuestaActivity extends AppCompatActivity {
+public class EncuestaActivity
+        extends BaseActivity
+        implements EncuestaFragment.OnFragmentInteractionListener,
+        FinEncuestaFragment.OnFragmentInteractionListener {
 
     @BindView(R.id.vp_encuesta)
     ViewPager vp_encuesta;
 
-    @BindView(R.id.ll_dots)
-    LinearLayout ll_dots;
-
     private DaoSession daoSession;
+    Long alumnoId;
 
-    private static final int MAX_PAGE = 12;
-    ViewPagerAdapter viewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,31 +48,87 @@ public class EncuestaActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         App app = (App) getApplication();
         daoSession = app.getDaoSession();
-        bottomProgressDots(0);
-        viewPagerAdapter = new ViewPagerAdapter();
-        vp_encuesta.setAdapter(viewPagerAdapter);
+        if (getIntent().hasExtra("ID_ALUMNO")) {
+            alumnoId = getIntent().getLongExtra("ID_ALUMNO", 0);
+        }
+        EncuestaPagerAdapter encuestaPagerAdapter = new EncuestaPagerAdapter(getSupportFragmentManager(), cargarEncuesta());
+        vp_encuesta.setAdapter(encuestaPagerAdapter);
+
     }
 
-    private void bottomProgressDots(int current_index) {
-        ImageView[] dots = new ImageView[MAX_PAGE];
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
-        ll_dots.removeAllViews();
-        for (int i = 0; i < dots.length; i++) {
-            dots[i] = new ImageView(this);
-            int width_height = 15;
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(width_height, width_height));
-            params.setMargins(10, 10, 10, 10);
-            dots[i].setLayoutParams(params);
-            dots[i].setImageResource(R.drawable.shape_circle);
-            dots[i].setColorFilter(getResources().getColor(R.color.grey_20), PorterDuff.Mode.SRC_IN);
-            ll_dots.addView(dots[i]);
+    }
+
+    public class EncuestaPagerAdapter extends FragmentPagerAdapter {
+
+        Encuesta encuesta;
+
+        EncuestaPagerAdapter(FragmentManager fm, Encuesta encuesta) {
+            super(fm);
+            this.encuesta = encuesta;
         }
 
-        if (dots.length > 0) {
-            dots[current_index].setImageResource(R.drawable.shape_circle);
-            dots[current_index].setColorFilter(getResources().getColor(R.color.orange_400), PorterDuff.Mode.SRC_IN);
+        @Override
+        public Fragment getItem(int i) {
+            if (i < encuesta.getPreguntas().size()) {
+                return EncuestaFragment.newInstance(encuesta.getPreguntas().get(i), i, alumnoId);
+            } else {
+                return FinEncuestaFragment.newInstance(alumnoId);
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return encuesta.getPreguntas().size() + 1;
         }
     }
 
+    private String obteneEncuestaFromJson(Context context) {
+        String json;
+        try {
+            InputStream is = context.getAssets().open("encuesta1.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return json;
+    }
 
+    private Encuesta cargarEncuesta() {
+        Encuesta encuesta = new Encuesta();
+        try {
+            JSONObject jsonEncuesta = new JSONObject(obteneEncuestaFromJson(getApplication()));
+            List<Pregunta> preguntaList = new ArrayList<>();
+            List<Respuesta> respuestaList = new ArrayList<>();
+            encuesta.setNombre(jsonEncuesta.getString("nombre"));
+            JSONArray arrayPreguntas = jsonEncuesta.getJSONArray("preguntas");
+            for (int i = 0; i < arrayPreguntas.length(); i++) {
+                Pregunta pregunta = new Pregunta();
+                pregunta.setOrden(arrayPreguntas.getJSONObject(i).getInt("orden"));
+                pregunta.setPortada(arrayPreguntas.getJSONObject(i).getString("portada"));
+                pregunta.setTexto(arrayPreguntas.getJSONObject(i).getString("texto"));
+                preguntaList.add(pregunta);
+                encuesta.setPreguntas(preguntaList);
+                JSONArray arrayRespuestas = arrayPreguntas.getJSONObject(i).getJSONArray("respuestas");
+                for (int a = 0; a < arrayRespuestas.length(); a++) {
+                    Respuesta respuesta = new Respuesta();
+                    respuesta.setImagen(arrayRespuestas.getJSONObject(a).getString("imagen"));
+                    respuesta.setTexto(arrayRespuestas.getJSONObject(a).getString("texto"));
+                    respuesta.setValor(arrayRespuestas.getJSONObject(a).getInt("valor"));
+                    respuestaList.add(respuesta);
+                    pregunta.setRespuestas(respuestaList);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return encuesta;
+    }
 }

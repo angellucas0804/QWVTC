@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -45,7 +49,7 @@ public class AgregarEditarPerfilActivity extends BaseActivity {
         ButterKnife.bind(this);
         App app = (App) getApplication();
         daoSession = app.getDaoSession();
-        if (getIntent().hasExtra("KEY_EDITAR_PERFIL")){
+        if (getIntent().hasExtra("KEY_EDITAR_PERFIL")) {
             int alumnoId = Integer.parseInt(getIntent().getStringExtra("KEY_EDITAR_PERFIL"));
             alumnosList = daoSession.getAlumnoDao().queryBuilder().where(AlumnoDao.Properties.Id.eq(alumnoId)).list();
             et_codigo_modular.setText(alumnosList.get(0).getChCodModular());
@@ -63,9 +67,9 @@ public class AgregarEditarPerfilActivity extends BaseActivity {
     @OnClick(R.id.btn_editar_agregar)
     public void editarAgregarPerfil() {
         if (validarCampos()) {
-            if (getIntent().hasExtra("KEY_EDITAR_PERFIL")){
+            if (getIntent().hasExtra("KEY_EDITAR_PERFIL")) {
                 editarAlumno();
-            }else {
+            } else {
                 nuevoAlumno();
             }
             showToastCorrecto("Se guardo correctamente");
@@ -79,14 +83,15 @@ public class AgregarEditarPerfilActivity extends BaseActivity {
         daoSession.getAlumnoDao().update(alumno);
     }
 
-    private void nuevoAlumno(){
+    private void nuevoAlumno() {
         AlumnoDao alumnoDao = daoSession.getAlumnoDao();
         Alumno alumno = new Alumno();
         ponerDatos(alumno);
         alumnoDao.save(alumno);
     }
 
-    private void ponerDatos(Alumno alumno){
+    private void ponerDatos(Alumno alumno) {
+
         alumno.setChCodModular(et_codigo_modular.getText().toString().trim());
         alumno.setNvColegio(et_nombre_colegio.getText().toString().trim());
         alumno.setNvNombres(et_nombres_alumno.getText().toString().trim());
@@ -96,6 +101,8 @@ public class AgregarEditarPerfilActivity extends BaseActivity {
         alumno.setInNivel(sp_nivel.getSelectedItemPosition());
         alumno.setInGrado(sp_grado.getSelectedItemPosition());
         alumno.setInTurno(sp_turno.getSelectedItemPosition());
+        alumno.setLngPuntaje(0L);
+
     }
 
     private boolean validarCampos() {

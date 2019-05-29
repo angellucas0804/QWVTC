@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.FinEncuestaFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/PuntajeBackView"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="16dp"
+            android:background="#72b8c9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/PuntajeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/PuntajeBackView"
+            app:layout_constraintEnd_toEndOf="@+id/PuntajeBackView"
+            app:layout_constraintEnd_toStartOf="@+id/imageView1"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/PuntajeBackView"
+            app:layout_constraintTop_toTopOf="@+id/PuntajeBackView"
+            tools:text="+ 100" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintBottom_toBottomOf="@+id/PuntajeTextView"
+            app:layout_constraintEnd_toEndOf="@+id/PuntajeBackView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/PuntajeTextView"
+            app:layout_constraintTop_toTopOf="@+id/PuntajeTextView" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="!Fin!"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/PuntajeBackView"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="¡Gracias por participar!"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/btn_enviar_encuesta"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView1" />
+
+        <Button
+            android:id="@+id/btn_enviar_encuesta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            tools:text="Enviar encuesta"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:textColor="@color/colorWhite"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>
