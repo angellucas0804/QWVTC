@@ -9,14 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pe.gob.qw.vigilatucole.AgregarEditarPerfilActivity;
-import pe.gob.qw.vigilatucole.EncuestaActivity;
 import pe.gob.qw.vigilatucole.R;
 import pe.gob.qw.vigilatucole.data.Alumno;
-import pe.gob.qw.vigilatucole.model.Encuesta;
+import pe.gob.qw.vigilatucole.util.Constantes;
 import pe.gob.qw.vigilatucole.util.ItemAnimation;
 
 public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.ViewHolder> {
@@ -46,12 +47,12 @@ public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.ViewHolder
         viewHolder.tv_nombres.setText(alumno.getNvNombres());
         viewHolder.tv_apellidos.setText(alumno.getNvApePatMat());
         viewHolder.tv_colegio.setText(alumno.getNvColegio());
-        viewHolder.tv_total_puntos.setText(alumno.getLngPuntaje()+" Puntos");
+        viewHolder.tv_total_puntos.setText(alumno.getLngPuntaje() + " Puntos");
         viewHolder.cv_alumno.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 Intent intent = new Intent(context, AgregarEditarPerfilActivity.class)
-                        .putExtra("KEY_EDITAR_PERFIL",String.valueOf(alumno.getId()));
+                        .putExtra(Constantes.PUTEXTRA_EDITAR_PERFIL, String.valueOf(alumno.getId()));
                 context.startActivity(intent);
                 return false;
             }
@@ -59,13 +60,9 @@ public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.ViewHolder
         viewHolder.cv_alumno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (encuestalistener != null){
+                if (encuestalistener != null) {
                     encuestalistener.setItme(alumno);
                 }
-
-
-
             }
         });
         setAnimation(viewHolder.itemView, i);
@@ -127,12 +124,11 @@ public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.ViewHolder
         return position;
     }
 
-    public void setlistener(Encuestalistener encuestalistener){
+    public void setlistener(Encuestalistener encuestalistener) {
         this.encuestalistener = encuestalistener;
     }
 
-    public interface Encuestalistener{
-
+    public interface Encuestalistener {
         void setItme(Alumno alumno);
     }
 

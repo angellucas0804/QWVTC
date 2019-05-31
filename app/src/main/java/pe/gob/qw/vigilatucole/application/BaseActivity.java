@@ -1,9 +1,8 @@
 package pe.gob.qw.vigilatucole.application;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -32,7 +31,6 @@ public class BaseActivity extends AppCompatActivity {
         Toast toast = new Toast(getApplicationContext());
         toast.setDuration(Toast.LENGTH_LONG);
 
-        //inflate view
         @SuppressLint("InflateParams") View custom_view = getLayoutInflater().inflate(R.layout.toast_icon_text, null);
         ((TextView) custom_view.findViewById(R.id.message)).setText(message);
         ((ImageView) custom_view.findViewById(R.id.icon)).setImageResource(R.drawable.ic_close);
@@ -46,7 +44,6 @@ public class BaseActivity extends AppCompatActivity {
         Toast toast = new Toast(getApplicationContext());
         toast.setDuration(Toast.LENGTH_LONG);
 
-        //inflate view
         @SuppressLint("InflateParams") View custom_view = getLayoutInflater().inflate(R.layout.toast_icon_text, null);
         ((TextView) custom_view.findViewById(R.id.message)).setText(message);
         ((ImageView) custom_view.findViewById(R.id.icon)).setImageResource(R.drawable.ic_done);
@@ -55,4 +52,6 @@ public class BaseActivity extends AppCompatActivity {
         toast.setView(custom_view);
         toast.show();
     }
+
+
 }

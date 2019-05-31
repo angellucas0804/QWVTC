@@ -1,6 +1,8 @@
 package pe.gob.qw.vigilatucole.api;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import pe.gob.qw.vigilatucole.util.Constantes;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -10,14 +12,20 @@ public class RetrofitClient {
 
     public static Retrofit getRetrofit(){
         if(retrofit==null){
-            OkHttpClient client = new OkHttpClient.Builder()
-                    .build();
             retrofit = new Retrofit.Builder()
-                    .baseUrl("base_url")
-                    .client(client)
+                    .baseUrl(Constantes.BASE_URL)
+                    .client(OkHttpCliente())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
         return retrofit;
+    }
+
+    private static OkHttpClient OkHttpCliente(){
+        OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        okHttpClientBuilder.addInterceptor(interceptor);
+        return okHttpClientBuilder.build();
     }
 }

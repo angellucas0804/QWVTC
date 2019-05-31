@@ -1,12 +1,17 @@
 package pe.gob.qw.vigilatucole;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -17,6 +22,8 @@ import pe.gob.qw.vigilatucole.application.BaseActivity;
 import pe.gob.qw.vigilatucole.data.Alumno;
 import pe.gob.qw.vigilatucole.data.AlumnoDao;
 import pe.gob.qw.vigilatucole.data.DaoSession;
+import pe.gob.qw.vigilatucole.util.Constantes;
+import pe.gob.qw.vigilatucole.util.Utils;
 
 public class AgregarEditarPerfilActivity extends BaseActivity {
 
@@ -49,8 +56,8 @@ public class AgregarEditarPerfilActivity extends BaseActivity {
         ButterKnife.bind(this);
         App app = (App) getApplication();
         daoSession = app.getDaoSession();
-        if (getIntent().hasExtra("KEY_EDITAR_PERFIL")) {
-            int alumnoId = Integer.parseInt(getIntent().getStringExtra("KEY_EDITAR_PERFIL"));
+        if (getIntent().hasExtra(Constantes.PUTEXTRA_EDITAR_PERFIL)) {
+            int alumnoId = Integer.parseInt(getIntent().getStringExtra(Constantes.PUTEXTRA_EDITAR_PERFIL));
             alumnosList = daoSession.getAlumnoDao().queryBuilder().where(AlumnoDao.Properties.Id.eq(alumnoId)).list();
             et_codigo_modular.setText(alumnosList.get(0).getChCodModular());
             et_nombre_colegio.setText(alumnosList.get(0).getNvColegio());
@@ -62,12 +69,38 @@ public class AgregarEditarPerfilActivity extends BaseActivity {
             sp_sexo.setSelection(alumnosList.get(0).getInSexo());
             tb_municipio.setChecked(alumnosList.get(0).getBiMunicipio());
         }
+
+        sp_nivel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("ahp,position",String.valueOf(position));
+                switch (position){
+                    case 1: //PRIMARIA
+                        List<String> gradosPrimaria = Arrays.asList(getResources().getStringArray(R.array.gradoPrimaria));
+                        ArrayAdapter<String> spinnerArrayAdapterP = new ArrayAdapter<>(AgregarEditarPerfilActivity.this,android.R.layout.simple_spinner_item,gradosPrimaria);
+                        spinnerArrayAdapterP.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        sp_grado.setAdapter(spinnerArrayAdapterP);
+                        break;
+                    case 2: //SECUNDARIA
+                        List<String> gradosSecundaria = Arrays.asList(getResources().getStringArray(R.array.gradoSecundaria));
+                        ArrayAdapter<String> spinnerArrayAdapterS = new ArrayAdapter<>(AgregarEditarPerfilActivity.this,android.R.layout.simple_spinner_item,gradosSecundaria);
+                        spinnerArrayAdapterS.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        sp_grado.setAdapter(spinnerArrayAdapterS);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @OnClick(R.id.btn_editar_agregar)
     public void editarAgregarPerfil() {
         if (validarCampos()) {
-            if (getIntent().hasExtra("KEY_EDITAR_PERFIL")) {
+            if (getIntent().hasExtra(Constantes.PUTEXTRA_EDITAR_PERFIL)) {
                 editarAlumno();
             } else {
                 nuevoAlumno();
@@ -106,28 +139,28 @@ public class AgregarEditarPerfilActivity extends BaseActivity {
     }
 
     private boolean validarCampos() {
-        if (et_codigo_modular.getText().toString().trim().isEmpty()) {
+        if (!Utils.esValidoInput(et_codigo_modular)) {
             showToastError("Ingrese el Código Modular");
             return false;
-        } else if (et_nombre_colegio.getText().toString().trim().isEmpty()) {
+        } else if (!Utils.esValidoInput(et_nombre_colegio)) {
             showToastError("Ingrese el Nombre del Colegio");
             return false;
-        } else if (et_nombres_alumno.getText().toString().trim().isEmpty()) {
+        } else if (!Utils.esValidoInput(et_nombres_alumno)) {
             showToastError("Ingrese sus Nombres");
             return false;
-        } else if (et_apellidos_alumno.getText().toString().trim().isEmpty()) {
+        } else if (!Utils.esValidoInput(et_apellidos_alumno)) {
             showToastError("Ingrese sus Apellidos");
             return false;
-        } else if (sp_sexo.getSelectedItemPosition() == 0) {
+        } else if (!Utils.esValidoSpinner(sp_sexo)) {
             showToastError("Eliga su Género");
             return false;
-        } else if (sp_nivel.getSelectedItemPosition() == 0) {
+        } else if (!Utils.esValidoSpinner(sp_nivel)) {
             showToastError("Eliga su Nivel");
             return false;
-        } else if (sp_grado.getSelectedItemPosition() == 0) {
+        } else if (!Utils.esValidoSpinner(sp_grado)) {
             showToastError("Eliga su Grado");
             return false;
-        } else if (sp_turno.getSelectedItemPosition() == 0) {
+        } else if (!Utils.esValidoSpinner(sp_turno)) {
             showToastError("Eliga su Turno");
             return false;
         } else {

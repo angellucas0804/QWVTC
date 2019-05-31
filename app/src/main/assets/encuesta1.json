@@ -4,10 +4,28 @@
   "version": 1,
   "preguntas": [
     {
-      "id": "43ec0e3d-9970-4190-8da2-ff9a0f3d15f6",
+      "id": "turno_mañana",
       "orden": 1,
       "portada": "qw_portada",
       "texto": "¿Les sirven los alimentos de Qali Warma antes del inicio de clases?",
+      "respuestas": [
+        {
+          "imagen": "agree",
+          "valor": 1,
+          "texto": "Si"
+        },
+        {
+          "imagen": "disagree",
+          "valor": 2,
+          "texto": "No"
+        }
+      ]
+    },
+    {
+      "id": "turno_tarde",
+      "orden": 1,
+      "portada": "qw_portada",
+      "texto": "¿Les sirven los alimentos de Qali Warma antes del inicio del recreo?",
       "respuestas": [
         {
           "imagen": "agree",
@@ -43,7 +61,7 @@
       "id": "9be77ce8-f09c-4bb1-90dc-10ca15a1b7c5",
       "orden": 3,
       "portada": "qw_portada",
-      "texto": "¿Hoy les dieron los alimentos de Qali Warma que debían entregar?",
+      "texto": "¿Hoy comieron los alimentos que Qali Warma debía entregar?",
       "respuestas": [
         {
           "imagen": "agree",

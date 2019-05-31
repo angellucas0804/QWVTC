@@ -5,8 +5,10 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pe.gob.qw.vigilatucole.EncuestaActivity;
 import pe.gob.qw.vigilatucole.R;
 import pe.gob.qw.vigilatucole.application.App;
 import pe.gob.qw.vigilatucole.data.Alumno;
@@ -35,6 +38,7 @@ import pe.gob.qw.vigilatucole.data.AlumnoRespuestaDao;
 import pe.gob.qw.vigilatucole.data.DaoSession;
 import pe.gob.qw.vigilatucole.model.Pregunta;
 import pe.gob.qw.vigilatucole.model.Respuesta;
+import pe.gob.qw.vigilatucole.util.Constantes;
 
 public class EncuestaFragment extends Fragment {
 
@@ -55,15 +59,13 @@ public class EncuestaFragment extends Fragment {
     private static final String NUMERO_PREGUNTA = "numero_preguntas";
     private static final String TEXTO_PREGUNTA = "texto_pregunta";
     private static final String IMAGEN_PORTADA = "imagen_portada";
-
     private static final String IMAGEN_RESPUESTA = "imagen_respuesta";
     private static final String TEXTO_RESPUESTA = "texto_respuesta";
-
     private static final String ALUMNO_ID = "alumno_id";
 
     DaoSession daoSession;
 
-    private OnFragmentInteractionListener mListener;
+    private OnFragmentInteractionListenerChange mListenerChange;
 
 
     private int position;
@@ -125,7 +127,7 @@ public class EncuestaFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_encuesta, container, false);
         ButterKnife.bind(this, view);
@@ -139,20 +141,20 @@ public class EncuestaFragment extends Fragment {
 
 
         cargarRespuestas();
-
+        calcularPuntaje();
 
         rg_respuestas.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_respuesta_si:
-                        guardarRespuesta("1", " ");
+                        guardarRespuesta(Constantes.RESPUESTA_SI, " ");
                         break;
                     case R.id.rb_respuesta_no:
-                        guardarRespuesta("2", " ");
+                        guardarRespuesta(Constantes.RESPUESTA_NO, " ");
                         break;
                 }
-                //calcularPuntaje();
+                calcularPuntaje();
             }
         });
 
@@ -160,15 +162,25 @@ public class EncuestaFragment extends Fragment {
     }
 
     private void calcularPuntaje() {
-        List<Alumno> alumnoList = daoSession.getAlumnoDao().queryBuilder().where(AlumnoDao.Properties.Id.eq(alumnoId)).list();
-        Long puntajeActual = alumnoList.get(0).getLngPuntaje();
-        Long puntajeAumentado = puntajeActual + 10;
-        Alumno alumno = alumnoList.get(0);
-        alumno.setLngPuntaje(puntajeAumentado);
-        daoSession.getAlumnoDao().update(alumno);
+        List<AlumnoRespuesta> alumnoRespuestaList = daoSession.getAlumnoRespuestaDao()
+                .queryBuilder()
+                .where(AlumnoRespuestaDao.Properties.Alumno_id.eq(alumnoId))
+                .list();
+
+        int puntaje = 0;
+        for (AlumnoRespuesta item : alumnoRespuestaList) {
+            if (item.getRespuesta() != 0) {
+                puntaje += Constantes.PUNTAJE_PREGUNTA;
+            }
+        }
+        puntajeEncuesta(String.valueOf(puntaje));
     }
 
-    private void guardarRespuesta(String respuesta, String detalle) {
+    public void puntajeEncuesta(String puntaje) {
+        onChangePoints(puntaje);
+    }
+
+    private void guardarRespuesta(int respuesta, String detalle) {
         AlumnoRespuesta alumnoRespuesta1 = alumnoRespuesta;
         alumnoRespuesta1.setRespuesta(respuesta);
         alumnoRespuesta1.setDetalle(detalle);
@@ -181,10 +193,10 @@ public class EncuestaFragment extends Fragment {
         alumnoRespuesta = daoSession.getAlumnoRespuestaDao().queryBuilder().where(AlumnoRespuestaDao.Properties.Alumno_id.eq(alumnoId),
                 AlumnoRespuestaDao.Properties.Pregunta_id.eq(numero_pregunta)).limit(1).unique();
         switch (alumnoRespuesta.getRespuesta()) {
-            case "1":
+            case Constantes.RESPUESTA_SI:
                 rb_respuesta_si.setChecked(true);
                 break;
-            case "2":
+            case Constantes.RESPUESTA_NO:
                 rb_respuesta_no.setChecked(true);
                 break;
         }
@@ -193,7 +205,7 @@ public class EncuestaFragment extends Fragment {
     private Drawable stringToDrawableRButton(String s) {
         int imageId = getResources().getIdentifier(s, "drawable", getActivity().getPackageName());
         Drawable imagedrawable = getResources().getDrawable(imageId);
-        imagedrawable.setBounds(0, 0, 196, 196);
+        imagedrawable.setBounds(0, 0, Constantes.TAMANIO_IMAGE_RADIO_BUTTON_X, Constantes.TAMANIO_IMAGE_RADIO_BUTTON_Y);
         return imagedrawable;
     }
 
@@ -201,17 +213,17 @@ public class EncuestaFragment extends Fragment {
         return getResources().getIdentifier(s, "drawable", getActivity().getPackageName());
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    public void onChangePoints(String s) {
+        if (mListenerChange != null) {
+            mListenerChange.onFragmentInteractionChange(s);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnFragmentInteractionListenerChange) {
+            mListenerChange = (OnFragmentInteractionListenerChange) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -221,10 +233,10 @@ public class EncuestaFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        mListenerChange = null;
     }
 
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+    public interface OnFragmentInteractionListenerChange {
+        void onFragmentInteractionChange(String s);
     }
 }

@@ -23,13 +23,13 @@ public class AlumnoRespuesta {
     private int pregunta_id;
     @SerializedName("respuesta")
     @Property(nameInDb = "respuesta")
-    private String respuesta;
+    private int respuesta;
     @SerializedName("detalle")
     @Property(nameInDb = "detalle")
     private String detalle;
-    @Generated(hash = 730981392)
+    @Generated(hash = 1864167690)
     public AlumnoRespuesta(Long id, Long alumno_id, Long encuesta_id,
-            int pregunta_id, String respuesta, String detalle) {
+            int pregunta_id, int respuesta, String detalle) {
         this.id = id;
         this.alumno_id = alumno_id;
         this.encuesta_id = encuesta_id;
@@ -64,10 +64,10 @@ public class AlumnoRespuesta {
     public void setPregunta_id(int pregunta_id) {
         this.pregunta_id = pregunta_id;
     }
-    public String getRespuesta() {
+    public int getRespuesta() {
         return this.respuesta;
     }
-    public void setRespuesta(String respuesta) {
+    public void setRespuesta(int respuesta) {
         this.respuesta = respuesta;
     }
     public String getDetalle() {
