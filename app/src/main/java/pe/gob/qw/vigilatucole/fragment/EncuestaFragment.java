@@ -1,38 +1,32 @@
 package pe.gob.qw.vigilatucole.fragment;
 
-import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import pe.gob.qw.vigilatucole.EncuestaActivity;
 import pe.gob.qw.vigilatucole.R;
 import pe.gob.qw.vigilatucole.application.App;
-import pe.gob.qw.vigilatucole.data.Alumno;
-import pe.gob.qw.vigilatucole.data.AlumnoDao;
-import pe.gob.qw.vigilatucole.data.AlumnoEncuesta;
-import pe.gob.qw.vigilatucole.data.AlumnoEncuestaDao;
 import pe.gob.qw.vigilatucole.data.AlumnoRespuesta;
 import pe.gob.qw.vigilatucole.data.AlumnoRespuestaDao;
 import pe.gob.qw.vigilatucole.data.DaoSession;
@@ -138,8 +132,6 @@ public class EncuestaFragment extends Fragment {
         rb_respuesta_si.setCompoundDrawables(null, stringToDrawableRButton(imagen_respuesta.get(0)), null, null);
         rb_respuesta_no.setCompoundDrawables(null, stringToDrawableRButton(imagen_respuesta.get(1)), null, null);
         iv_portada.setImageResource(stringToDrawableImageView(portada));
-
-
         cargarRespuestas();
         calcularPuntaje();
 
@@ -148,7 +140,11 @@ public class EncuestaFragment extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_respuesta_si:
-                        guardarRespuesta(Constantes.RESPUESTA_SI, " ");
+                        if (numero_pregunta == 9) {
+                            showCustomDialog();
+                        } else {
+                            guardarRespuesta(Constantes.RESPUESTA_SI, " ");
+                        }
                         break;
                     case R.id.rb_respuesta_no:
                         guardarRespuesta(Constantes.RESPUESTA_NO, " ");
@@ -185,21 +181,70 @@ public class EncuestaFragment extends Fragment {
         alumnoRespuesta1.setRespuesta(respuesta);
         alumnoRespuesta1.setDetalle(detalle);
         daoSession.getAlumnoRespuestaDao().update(alumnoRespuesta1);
+        sonidoRespuesta();
+    }
+
+
+    private void sonidoRespuesta() {
+        MediaPlayer mediaPlayer = MediaPlayer.create(getContext(), R.raw.soundclick3);
+        mediaPlayer.start();
     }
 
 
     private void cargarRespuestas() {
-
         alumnoRespuesta = daoSession.getAlumnoRespuestaDao().queryBuilder().where(AlumnoRespuestaDao.Properties.Alumno_id.eq(alumnoId),
                 AlumnoRespuestaDao.Properties.Pregunta_id.eq(numero_pregunta)).limit(1).unique();
         switch (alumnoRespuesta.getRespuesta()) {
             case Constantes.RESPUESTA_SI:
-                rb_respuesta_si.setChecked(true);
+                setCheckedRB(rb_respuesta_si);
                 break;
             case Constantes.RESPUESTA_NO:
-                rb_respuesta_no.setChecked(true);
+                setCheckedRB(rb_respuesta_no);
                 break;
         }
+    }
+
+    private void showCustomDialog() {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_add_detail);
+        dialog.setCancelable(false);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        final EditText et_dialog = dialog.findViewById(R.id.et_dialog);
+
+        (dialog.findViewById(R.id.btn_guardar)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String detalle = et_dialog.getText().toString().trim();
+                if (detalle.isEmpty()) {
+                    Toast.makeText(getContext(), "Debe escribir que alimentos no les gusta.", Toast.LENGTH_SHORT).show();
+                } else {
+                    guardarRespuesta(Constantes.RESPUESTA_SI, detalle);
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        (dialog.findViewById(R.id.btn_cancelar)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCheckedRB(rb_respuesta_no);
+                guardarRespuesta(Constantes.RESPUESTA_NO, " ");
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+        dialog.getWindow().setAttributes(lp);
+    }
+
+    private void setCheckedRB(RadioButton rb_respuesta) {
+        rb_respuesta.setChecked(true);
     }
 
     private Drawable stringToDrawableRButton(String s) {

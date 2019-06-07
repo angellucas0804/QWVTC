@@ -12,6 +12,8 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity(nameInDb = "AlumnoEncuesta")
 public class AlumnoEncuesta {
 
+    @Id(autoincrement = true)
+    private Long id;
     @SerializedName("alumno_id")
     @Property(nameInDb = "alumno_id")
     private Long alumno_id;
@@ -21,14 +23,22 @@ public class AlumnoEncuesta {
     @SerializedName("fecha_encuesta")
     @Property(nameInDb = "fecha_encuesta")
     private String fecha_encuesta;
-    @Generated(hash = 360717551)
-    public AlumnoEncuesta(Long alumno_id, int encuesta_id, String fecha_encuesta) {
+    @Generated(hash = 1321475552)
+    public AlumnoEncuesta(Long id, Long alumno_id, int encuesta_id,
+            String fecha_encuesta) {
+        this.id = id;
         this.alumno_id = alumno_id;
         this.encuesta_id = encuesta_id;
         this.fecha_encuesta = fecha_encuesta;
     }
     @Generated(hash = 1863037062)
     public AlumnoEncuesta() {
+    }
+    public Long getId() {
+        return this.id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
     public Long getAlumno_id() {
         return this.alumno_id;
@@ -48,7 +58,4 @@ public class AlumnoEncuesta {
     public void setFecha_encuesta(String fecha_encuesta) {
         this.fecha_encuesta = fecha_encuesta;
     }
-
-
-
 }

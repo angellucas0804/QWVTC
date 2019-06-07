@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.EncuestaFragment">
@@ -13,8 +13,7 @@
         <ImageView
             android:id="@+id/iv_portada"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="200dp"
             android:scaleType="fitXY"
             android:src="@drawable/avatar_m"
             app:layout_constraintBottom_toTopOf="@+id/tv_numero_pregunta"
@@ -24,13 +23,14 @@
             android:id="@+id/tv_pregunta"
             android:layout_width="match_parent"
             android:layout_height="136dp"
-            android:background="#388E3C"
+            android:background="@color/colorPreguntasFondo"
             android:gravity="center|start"
             android:padding="8dp"
             android:paddingStart="8dp"
+            android:textStyle="bold"
             android:paddingEnd="82dp"
             android:textColor="@color/colorWhite"
-            android:textSize="20sp"
+            android:textSize="21sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_numero_pregunta"
             app:layout_constraintTop_toTopOf="@+id/tv_numero_pregunta"
             tools:text="¿Observas si las personas que entregan los alimentos tienen las manos limpias y uñas cortas?" />
@@ -41,12 +41,12 @@
             android:layout_height="152dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:background="#FFECB3"
+            android:background="@color/colorNroPreguntasFondo"
             android:gravity="center_horizontal"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-            android:textColor="#00796B"
+            android:textColor="@color/colorWhite"
             app:layout_constraintBottom_toTopOf="@+id/rg_respuestas"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_portada"
@@ -74,8 +74,10 @@
                 android:button="@android:color/transparent"
                 android:drawableTop="@drawable/avatar_m"
                 android:gravity="center"
-                tools:text="SI"
-                android:textSize="24sp" />
+                android:padding="16dp"
+                android:textColor="@drawable/rb_textcolor"
+                android:textSize="24sp"
+                tools:text="SI" />
 
             <RadioButton
                 android:id="@+id/rb_respuesta_no"
@@ -87,8 +89,10 @@
                 android:button="@android:color/transparent"
                 android:drawableTop="@drawable/avatar_m"
                 android:gravity="center"
-                tools:text="NO"
-                android:textSize="24sp" />
+                android:padding="16dp"
+                android:textColor="@drawable/rb_textcolor"
+                android:textSize="24sp"
+                tools:text="No" />
 
         </RadioGroup>
 

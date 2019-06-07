@@ -1,23 +1,20 @@
 package pe.gob.qw.vigilatucole.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import pe.gob.qw.vigilatucole.AgregarEditarPerfilActivity;
 import pe.gob.qw.vigilatucole.R;
 import pe.gob.qw.vigilatucole.data.Alumno;
-import pe.gob.qw.vigilatucole.util.Constantes;
 import pe.gob.qw.vigilatucole.util.ItemAnimation;
 
 public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.ViewHolder> {
@@ -41,6 +38,7 @@ public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.ViewHolder
         return new ViewHolder(inflater.inflate(R.layout.item_alumno, viewGroup, false));
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         final Alumno alumno = alumnos.get(i);
@@ -48,20 +46,29 @@ public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.ViewHolder
         viewHolder.tv_apellidos.setText(alumno.getNvApePatMat());
         viewHolder.tv_colegio.setText(alumno.getNvColegio());
         viewHolder.tv_total_puntos.setText(alumno.getLngPuntaje() + " Puntos");
-        viewHolder.cv_alumno.setOnLongClickListener(new View.OnLongClickListener() {
+
+        switch (alumno.getInSexo()) {
+            case 1:
+                viewHolder.iv_perfil.setImageResource(R.drawable.avatar_m);
+                break;
+            case 2:
+                viewHolder.iv_perfil.setImageResource(R.drawable.avatar_f);
+                break;
+        }
+
+        viewHolder.iv_editar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                Intent intent = new Intent(context, AgregarEditarPerfilActivity.class)
-                        .putExtra(Constantes.PUTEXTRA_EDITAR_PERFIL, String.valueOf(alumno.getId()));
-                context.startActivity(intent);
-                return false;
+            public void onClick(View v) {
+                if (encuestalistener != null) {
+                    encuestalistener.editarPerfil(alumno);
+                }
             }
         });
         viewHolder.cv_alumno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (encuestalistener != null) {
-                    encuestalistener.setItme(alumno);
+                    encuestalistener.irEncuesta(alumno);
                 }
             }
         });
@@ -107,6 +114,10 @@ public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.ViewHolder
         TextView tv_total_puntos;
         @BindView(R.id.cv_alumno)
         CardView cv_alumno;
+        @BindView(R.id.iv_editar)
+        ImageView iv_editar;
+        @BindView(R.id.iv_perfil)
+        ImageView iv_perfil;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -129,7 +140,9 @@ public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.ViewHolder
     }
 
     public interface Encuestalistener {
-        void setItme(Alumno alumno);
+        void irEncuesta(Alumno alumno);
+
+        void editarPerfil(Alumno alumno);
     }
 
 

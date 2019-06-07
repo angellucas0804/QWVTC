@@ -1,17 +1,21 @@
 package pe.gob.qw.vigilatucole.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.greenrobot.greendao.query.DeleteQuery;
 import org.json.JSONArray;
@@ -30,6 +34,7 @@ import pe.gob.qw.vigilatucole.R;
 import pe.gob.qw.vigilatucole.api.QWService;
 import pe.gob.qw.vigilatucole.api.RetrofitClient;
 import pe.gob.qw.vigilatucole.application.App;
+import pe.gob.qw.vigilatucole.application.BaseActivity;
 import pe.gob.qw.vigilatucole.data.Alumno;
 import pe.gob.qw.vigilatucole.data.AlumnoDao;
 import pe.gob.qw.vigilatucole.data.AlumnoEncuesta;
@@ -70,7 +75,6 @@ public class FinEncuestaFragment extends Fragment {
         if (getArguments() != null) {
             alumnoId = getArguments().getLong(ALUMNO_ID);
         }
-
         App app = (App) Objects.requireNonNull(getActivity()).getApplication();
         daoSession = app.getDaoSession();
     }
@@ -83,12 +87,12 @@ public class FinEncuestaFragment extends Fragment {
         return view;
     }
 
-
     @OnClick(R.id.btn_enviar_encuesta)
     public void terminarEncuesta() {
 
         List<AlumnoRespuesta> alumnoRespuestaList = daoSession.getAlumnoRespuestaDao().queryBuilder().where(AlumnoRespuestaDao.Properties.Alumno_id.eq(alumnoId)).list();
         Alumno alumno = daoSession.getAlumnoDao().queryBuilder().where(AlumnoDao.Properties.Id.eq(alumnoId)).limit(1).unique();
+        AlumnoEncuesta alumnoEncuesta = daoSession.getAlumnoEncuestaDao().queryBuilder().where(AlumnoEncuestaDao.Properties.Alumno_id.eq(alumnoId)).limit(1).unique();
 
         JSONObject jsonResponse = new JSONObject();
         try {
@@ -102,12 +106,17 @@ public class FinEncuestaFragment extends Fragment {
             jsonResponse.put("grado", alumno.getInGrado());
             jsonResponse.put("miembroDelMunicipio", alumno.getBiMunicipio());
             jsonResponse.put("encuestaId", Constantes.ENCUESTA_ID);
+            jsonResponse.put("datFecha", alumnoEncuesta.getFecha_encuesta());
 
             JSONArray arrayRespuestas = new JSONArray();
             for (AlumnoRespuesta item : alumnoRespuestaList) {
+                if (item.getRespuesta() == 0) {
+                    showToastError("Debe responder la pregunta " + item.getPregunta_id());
+                    return;
+                }
                 JSONObject jsonRespuestas = new JSONObject();
-                jsonRespuestas.put("pregunta", item.getPregunta_id() );
-                jsonRespuestas.put("respuesta",item.getRespuesta() );
+                jsonRespuestas.put("pregunta", item.getPregunta_id());
+                jsonRespuestas.put("respuesta", item.getRespuesta());
                 jsonRespuestas.put("detalle", item.getDetalle());
                 arrayRespuestas.put(jsonRespuestas);
             }
@@ -120,12 +129,15 @@ public class FinEncuestaFragment extends Fragment {
         enviarEncuesta(jsonResponse);
     }
 
-    private void limpiarTablas() {
-        DeleteQuery<AlumnoRespuesta> alumnoRespuestaDeleteQuery = daoSession.getAlumnoRespuestaDao().queryBuilder().where(AlumnoEncuestaDao.Properties.Alumno_id.eq(alumnoId)).buildDelete();
-        DeleteQuery<AlumnoEncuesta> alumnoEncuestaDeleteQuery = daoSession.getAlumnoEncuestaDao().queryBuilder().where(AlumnoEncuestaDao.Properties.Alumno_id.eq(alumnoId)).buildDelete();
-        alumnoRespuestaDeleteQuery.executeDeleteWithoutDetachingEntities();
-        alumnoEncuestaDeleteQuery.executeDeleteWithoutDetachingEntities();
-        daoSession.clear();
+    private void showToastError(String message) {
+        Toast toast = new Toast(getContext());
+        toast.setDuration(Toast.LENGTH_LONG);
+        @SuppressLint("InflateParams") View custom_view = getLayoutInflater().inflate(R.layout.toast_icon_text, null);
+        ((TextView) custom_view.findViewById(R.id.message)).setText(message);
+        ((ImageView) custom_view.findViewById(R.id.icon)).setImageResource(R.drawable.ic_close);
+        ((CardView) custom_view.findViewById(R.id.parent_view)).setCardBackgroundColor(getResources().getColor(R.color.red_600));
+        toast.setView(custom_view);
+        toast.show();
     }
 
 

@@ -1,14 +1,9 @@
 package pe.gob.qw.vigilatucole;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -40,6 +35,7 @@ public class PerfilActivity extends BaseActivity {
         ButterKnife.bind(this);
         App app = (App) getApplication();
         daoSession = app.getDaoSession();
+        setTitle("Seleccione un perfil");
         verPerfilList();
     }
 
@@ -53,14 +49,19 @@ public class PerfilActivity extends BaseActivity {
         PerfilAdapter adapter = new PerfilAdapter(this, daoSession.getAlumnoDao().loadAll(), ItemAnimation.BOTTOM_UP);
         adapter.setlistener(new PerfilAdapter.Encuestalistener() {
             @Override
-            public void setItme(Alumno alumno) {
+            public void irEncuesta(Alumno alumno) {
                 int cantidadAlumno = (int) daoSession.getAlumnoEncuestaDao().queryBuilder().where(AlumnoEncuestaDao.Properties.Alumno_id.eq(alumno.getId())).count();
                 int turnoAlumno = alumno.getInTurno();
                 if (cantidadAlumno > 0) {
-                    empezarActividad(EncuestaActivity.class, alumno.getId(), alumno.getLngPuntaje(),turnoAlumno);
+                    empezarActividad(EncuestaActivity.class, alumno.getId(), alumno.getLngPuntaje(), turnoAlumno);
                 } else if (nuevoAlumnoEncuesta(alumno.getId(), turnoAlumno) > 0) {
-                    empezarActividad(EncuestaActivity.class, alumno.getId(), alumno.getLngPuntaje(),turnoAlumno);
+                    empezarActividad(EncuestaActivity.class, alumno.getId(), alumno.getLngPuntaje(), turnoAlumno);
                 }
+            }
+
+            @Override
+            public void editarPerfil(Alumno alumno) {
+                empezarActividad(AgregarEditarPerfilActivity.class, alumno.getId(), 0L, 0);
             }
         });
         rv_perfil.setHasFixedSize(true);
@@ -77,15 +78,10 @@ public class PerfilActivity extends BaseActivity {
 
     private Long nuevoAlumnoEncuesta(Long id, int turno) {
 
-        Date today = new Date();
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
-        String dateToStr = format.format(today);
-
         AlumnoEncuesta alumnoEncuesta = new AlumnoEncuesta();
         alumnoEncuesta.setAlumno_id(id);
         alumnoEncuesta.setEncuesta_id(Constantes.ENCUESTA_ID);
-        alumnoEncuesta.setFecha_encuesta(dateToStr);
+        alumnoEncuesta.setFecha_encuesta(Utils.dateTimeNowToString());
         Long id_encuesta = daoSession.getAlumnoEncuestaDao().insert(alumnoEncuesta);
 
         Encuesta encuesta = Utils.cargarEncuestaFromJson(this, turno);
@@ -95,22 +91,19 @@ public class PerfilActivity extends BaseActivity {
         }
 
         return id_encuesta;
-
     }
 
     private void nuevoAlumnoRespuesta(Long id_encuesta, Long id, int orden) {
-
         AlumnoRespuesta alumnoRespuesta = new AlumnoRespuesta();
         alumnoRespuesta.setAlumno_id(id);
         alumnoRespuesta.setEncuesta_id(id_encuesta);
         alumnoRespuesta.setPregunta_id(orden);
         alumnoRespuesta.setRespuesta(0);
         alumnoRespuesta.setDetalle(" ");
-
         daoSession.getAlumnoRespuestaDao().insert(alumnoRespuesta);
     }
 
-    public void empezarActividad(Class<?> otherActivityClass, Long alumnoId, Long puntaje,int turno) {
+    public void empezarActividad(Class<?> otherActivityClass, Long alumnoId, Long puntaje, int turno) {
         Intent intent = new Intent(getApplicationContext(), otherActivityClass)
                 .putExtra(Constantes.PUTEXTRA_ALUMNO_ID, alumnoId)
                 .putExtra(Constantes.PUTEXTRA_PUNTAJE_PERFIL, puntaje)

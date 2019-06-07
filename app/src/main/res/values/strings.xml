@@ -3,4 +3,18 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="editar">editar</string>
+    <string name="gracias_por_participar">¡Gracias por participar!</string>
+    <string name="fin">!Fin!</string>
+    <string name="enviar_encuesta">Enviar encuesta</string>
+    <string name="cancelar">cancelar</string>
+    <string name="guardar">guardar</string>
+    <string name="escribe_aqui">Escribe aqui ...</string>
+    <string name="que_alimentos_no_te_gusta">¿Que alimentos no te gusta?</string>
+    <string name="agregar">Agregar</string>
+    <string name="vigila_tu_cole">Vigila Tu Cole</string>
+    <string name="registra_el_progreso_de_tu_cole_ny_ay_danos_a_ayudarte">¡Registra el progreso de tu cole! \nY ayúdanos a ayudarte…</string>
+    <string name="inicio">inicio</string>
+    <string name="c_digo_modular">Código Modular:</string>
+    <string name="nombre_del_colegio">Nombre del Colegio</string>
 </resources>

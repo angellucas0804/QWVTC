@@ -40,7 +40,6 @@
             android:gravity="center"
             android:maxLines="1"
             android:singleLine="true"
-            android:text="Error Toast"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/grey_5" />
 

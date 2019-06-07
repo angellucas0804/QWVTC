@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -25,7 +26,7 @@
             android:background="?android:attr/selectableItemBackground">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/iv_perfil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -42,12 +43,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="Nombres"
+                tools:text="Nombres "
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/tv_apellidos"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintEnd_toStartOf="@+id/iv_editar"
+                app:layout_constraintStart_toEndOf="@+id/iv_perfil"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -56,12 +56,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="Apellidos"
+                tools:text="Apellidos"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/tv_colegio"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintEnd_toStartOf="@+id/iv_editar"
+                app:layout_constraintStart_toEndOf="@+id/iv_perfil"
                 app:layout_constraintTop_toBottomOf="@+id/tv_nombres" />
 
             <TextView
@@ -70,12 +69,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="Colegio"
+                tools:text="Colegio"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/tv_total_puntos"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintEnd_toStartOf="@+id/iv_editar"
+                app:layout_constraintStart_toEndOf="@+id/iv_perfil"
                 app:layout_constraintTop_toBottomOf="@+id/tv_apellidos" />
 
             <TextView
@@ -84,14 +82,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="1230 Puntos"
+                tools:text="1230 Puntos"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintEnd_toStartOf="@+id/iv_editar"
+                app:layout_constraintStart_toEndOf="@+id/iv_perfil"
                 app:layout_constraintTop_toBottomOf="@+id/tv_colegio" />
+
+            <!--<Button
+                android:id="@+id/btn_editar_perfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/editar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />-->
+
+            <ImageView
+                android:padding="8dp"
+                android:id="@+id/iv_editar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_editar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </android.support.constraint.ConstraintLayout>

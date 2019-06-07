@@ -15,18 +15,22 @@
         tools:listitem="@layout/item_alumno" />
 
     <FrameLayout
-        android:id="@+id/fl_agregar_perfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_agregar_perfil"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="bottom|end"
+            android:backgroundTint="@color/green_500"
+            app:borderWidth="0dp"
+            android:layout_margin="16dp"
             android:tint="@android:color/white" />
 
         <TextView
@@ -37,8 +41,7 @@
             android:text="Agregar"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
-            android:textSize="12sp" />
-
+            android:textSize="16sp" />
 
     </FrameLayout>
 

@@ -1,14 +1,14 @@
 package pe.gob.qw.vigilatucole;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.util.Arrays;
@@ -35,8 +35,10 @@ public class AgregarEditarPerfilActivity extends BaseActivity {
     EditText et_nombres_alumno;
     @BindView(R.id.et_apellidos_alumno)
     EditText et_apellidos_alumno;
-    @BindView(R.id.tb_municipio)
-    ToggleButton tb_municipio;
+    @BindView(R.id.rb_perfil_si)
+    RadioButton rb_perfil_si;
+    @BindView(R.id.rb_perfil_no)
+    RadioButton rb_perfil_no;
     @BindView(R.id.sp_sexo)
     Spinner sp_sexo;
     @BindView(R.id.sp_nivel)
@@ -48,6 +50,7 @@ public class AgregarEditarPerfilActivity extends BaseActivity {
 
     private DaoSession daoSession;
     List<Alumno> alumnosList;
+    private boolean editarPerfil = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +59,10 @@ public class AgregarEditarPerfilActivity extends BaseActivity {
         ButterKnife.bind(this);
         App app = (App) getApplication();
         daoSession = app.getDaoSession();
-        if (getIntent().hasExtra(Constantes.PUTEXTRA_EDITAR_PERFIL)) {
-            int alumnoId = Integer.parseInt(getIntent().getStringExtra(Constantes.PUTEXTRA_EDITAR_PERFIL));
+        setTitle("Datos del alumno");
+        if (getIntent().hasExtra(Constantes.PUTEXTRA_ALUMNO_ID)) {
+            editarPerfil = true;
+            long alumnoId = getIntent().getLongExtra(Constantes.PUTEXTRA_ALUMNO_ID, Constantes.DEFAULT_VALUE_CERO);
             alumnosList = daoSession.getAlumnoDao().queryBuilder().where(AlumnoDao.Properties.Id.eq(alumnoId)).list();
             et_codigo_modular.setText(alumnosList.get(0).getChCodModular());
             et_nombre_colegio.setText(alumnosList.get(0).getNvColegio());
@@ -67,32 +72,36 @@ public class AgregarEditarPerfilActivity extends BaseActivity {
             sp_grado.setSelection(alumnosList.get(0).getInGrado());
             sp_turno.setSelection(alumnosList.get(0).getInTurno());
             sp_sexo.setSelection(alumnosList.get(0).getInSexo());
-            tb_municipio.setChecked(alumnosList.get(0).getBiMunicipio());
+            rb_perfil_si.setChecked(alumnosList.get(0).getBiMunicipio());
+            rb_perfil_no.setChecked(!alumnosList.get(0).getBiMunicipio());
         }
-
         sp_nivel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("ahp,position",String.valueOf(position));
-                switch (position){
+                switch (position) {
                     case 1: //PRIMARIA
                         List<String> gradosPrimaria = Arrays.asList(getResources().getStringArray(R.array.gradoPrimaria));
-                        ArrayAdapter<String> spinnerArrayAdapterP = new ArrayAdapter<>(AgregarEditarPerfilActivity.this,android.R.layout.simple_spinner_item,gradosPrimaria);
+                        ArrayAdapter<String> spinnerArrayAdapterP = new ArrayAdapter<>(AgregarEditarPerfilActivity.this, android.R.layout.simple_spinner_item, gradosPrimaria);
                         spinnerArrayAdapterP.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         sp_grado.setAdapter(spinnerArrayAdapterP);
+                        if (editarPerfil) {
+                            sp_grado.setSelection(alumnosList.get(0).getInGrado());
+                        }
                         break;
                     case 2: //SECUNDARIA
                         List<String> gradosSecundaria = Arrays.asList(getResources().getStringArray(R.array.gradoSecundaria));
-                        ArrayAdapter<String> spinnerArrayAdapterS = new ArrayAdapter<>(AgregarEditarPerfilActivity.this,android.R.layout.simple_spinner_item,gradosSecundaria);
+                        ArrayAdapter<String> spinnerArrayAdapterS = new ArrayAdapter<>(AgregarEditarPerfilActivity.this, android.R.layout.simple_spinner_item, gradosSecundaria);
                         spinnerArrayAdapterS.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         sp_grado.setAdapter(spinnerArrayAdapterS);
+                        if (editarPerfil) {
+                            sp_grado.setSelection(alumnosList.get(0).getInGrado());
+                        }
                         break;
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
     }
@@ -106,6 +115,7 @@ public class AgregarEditarPerfilActivity extends BaseActivity {
                 nuevoAlumno();
             }
             showToastCorrecto("Se guardo correctamente");
+            editarPerfil = false;
             onBackPressed();
         }
     }
@@ -117,10 +127,10 @@ public class AgregarEditarPerfilActivity extends BaseActivity {
     }
 
     private void nuevoAlumno() {
-        AlumnoDao alumnoDao = daoSession.getAlumnoDao();
         Alumno alumno = new Alumno();
         ponerDatos(alumno);
-        alumnoDao.save(alumno);
+        alumno.setLngPuntaje(0L);
+        daoSession.getAlumnoDao().save(alumno);
     }
 
     private void ponerDatos(Alumno alumno) {
@@ -129,13 +139,11 @@ public class AgregarEditarPerfilActivity extends BaseActivity {
         alumno.setNvColegio(et_nombre_colegio.getText().toString().trim());
         alumno.setNvNombres(et_nombres_alumno.getText().toString().trim());
         alumno.setNvApePatMat(et_apellidos_alumno.getText().toString().trim());
-        alumno.setBiMunicipio(tb_municipio.isChecked());
+        alumno.setBiMunicipio(rb_perfil_si.isChecked());
         alumno.setInSexo(sp_sexo.getSelectedItemPosition());
         alumno.setInNivel(sp_nivel.getSelectedItemPosition());
         alumno.setInGrado(sp_grado.getSelectedItemPosition());
         alumno.setInTurno(sp_turno.getSelectedItemPosition());
-        alumno.setLngPuntaje(0L);
-
     }
 
     private boolean validarCampos() {
