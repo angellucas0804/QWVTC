@@ -4,21 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context=".MainActivity">
 
     <ImageView
-            android:id="@+id/iv_logo"
+        android:id="@+id/iv_logo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:src="@drawable/ic_qaliwarma"
-        app:layout_constraintBottom_toTopOf="@+id/tv_titulo"
+        android:src="@drawable/ic_logo"
+        app:layout_constraintBottom_toTopOf="@+id/civ_logo_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_logo_2"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/logo2"
+        app:layout_constraintBottom_toTopOf="@+id/tv_titulo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
+
 
     <TextView
         android:id="@+id/tv_titulo"
@@ -27,15 +43,15 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:textStyle="bold"
         android:text="@string/vigila_tu_cole"
-        android:textColor="@color/colorBlack"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toTopOf="@+id/btn_inicio"
+        android:textColor="@color/colorLetraNegroOsucro"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_subtitulo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
+        app:layout_constraintTop_toBottomOf="@+id/civ_logo_2" />
 
     <TextView
         android:id="@+id/tv_subtitulo"
@@ -43,10 +59,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:textColor="@color/colorBlack"
         android:layout_marginEnd="8dp"
+        android:gravity="center"
         android:text="@string/registra_el_progreso_de_tu_cole_ny_ay_danos_a_ayudarte"
+        android:textColor="@color/colorLetraNegroOsucro"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btn_inicio"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_titulo" />
 
@@ -55,17 +75,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/inicio"
         android:background="@color/colorPrimary"
+        android:text="@string/inicio"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_titulo" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_subtitulo" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import pe.gob.qw.vigilatucole.util.Utils;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     TextView tv_subtitulo;
     @BindView(R.id.btn_inicio)
     Button btn_inicio;
+    @BindView(R.id.civ_logo_2)
+    CircleImageView civ_logo_2;
 
     Animation uptodown, downtoup;
 
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         tv_titulo.setAnimation(uptodown);
         tv_subtitulo.setAnimation(downtoup);
         btn_inicio.setAnimation(downtoup);
+        civ_logo_2.setAnimation(uptodown);
     }
 
     @OnClick(R.id.btn_inicio)

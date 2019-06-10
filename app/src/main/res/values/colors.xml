@@ -20,5 +20,6 @@
     <color name="colorLetraNegroOsucro">#212121</color>
     <color name="colorPreguntasFondo">#72b8c9</color>
     <color name="colorNroPreguntasFondo">#fed3a5</color>
+    <color name="colorTransparente">#00000000</color>
 
 </resources>

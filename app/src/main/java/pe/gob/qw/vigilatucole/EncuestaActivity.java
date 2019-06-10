@@ -39,6 +39,8 @@ import pe.gob.qw.vigilatucole.application.App;
 import pe.gob.qw.vigilatucole.application.BaseActivity;
 import pe.gob.qw.vigilatucole.data.Alumno;
 import pe.gob.qw.vigilatucole.data.AlumnoDao;
+import pe.gob.qw.vigilatucole.data.AlumnoEncuesta;
+import pe.gob.qw.vigilatucole.data.AlumnoEncuestaDao;
 import pe.gob.qw.vigilatucole.data.AlumnoRespuesta;
 import pe.gob.qw.vigilatucole.data.AlumnoRespuestaDao;
 import pe.gob.qw.vigilatucole.data.DaoSession;
@@ -105,6 +107,7 @@ public class EncuestaActivity extends BaseActivity
         translateAnimation = new TranslateAnimation(250.0F, 0.0F, 0.0F, 0.0F);
         translateAnimation.setDuration(3000);
         translateAnimation.setFillAfter(true);
+        actualizarFecha();
 
         vp_encuesta.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -149,6 +152,12 @@ public class EncuestaActivity extends BaseActivity
 
     }
 
+    private void actualizarFecha() {
+        AlumnoEncuesta alumnoEncuesta = daoSession.getAlumnoEncuestaDao().queryBuilder().where(AlumnoEncuestaDao.Properties.Id.eq(alumnoId)).limit(1).unique();
+        alumnoEncuesta.setFecha_encuesta(Utils.dateTimeNowToString());
+        daoSession.getAlumnoEncuestaDao().update(alumnoEncuesta);
+    }
+
     public void verAlertDialog() {
         new android.support.v7.app.AlertDialog.Builder(this)
                 .setTitle(getString(R.string.app_name))
@@ -191,15 +200,12 @@ public class EncuestaActivity extends BaseActivity
     public void onFragmentInteractionChange(String s) {
         tv_puntaje_encuesta.setText(s);
         tv_puntaje_fin_encuesta.setText("+ " + s);
-
-        /*FinEncuestaFragment finEncuestaFragment = (FinEncuestaFragment) getSupportFragmentManager().findFragmentById(R.id.fl_fin_encuesta);
-        Objects.requireNonNull(finEncuestaFragment).actualizarPuntaje(s);*/
     }
 
 
     @Override
     public void onFragmentInteractionEnviar(JSONObject jsonObject) {
-
+        showLoading(this);
         RequestBody requestBody = null;
         try {
             requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), (new JSONObject(String.valueOf(jsonObject))).toString());
@@ -217,14 +223,17 @@ public class EncuestaActivity extends BaseActivity
                         sumarPuntaje();
                         showToastCorrecto("Felicidades, enviaste tu encuesta.");
                         startActivity(new Intent(EncuestaActivity.this, PerfilActivity.class));
+                        finish();
                     } else {
                         showToastError("Ha ocurrido algo, vuelve a intentarlo.");
                     }
                 }
+                hideLoading();
             }
 
             @Override
             public void onFailure(@NonNull Call<Boolean> call, @NonNull Throwable t) {
+                hideLoading();
                 showToastError("Error interno: " + t.getMessage());
             }
         });

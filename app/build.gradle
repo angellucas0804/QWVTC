@@ -7,8 +7,8 @@ android {
         applicationId "pe.gob.qw.vigilatucole"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -47,4 +47,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
+
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.wang.avi:library:2.1.3'
 }

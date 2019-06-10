@@ -1,11 +1,13 @@
 package pe.gob.qw.vigilatucole.application;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +18,9 @@ import pe.gob.qw.vigilatucole.R;
 
 @SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity {
+
+
+    private static android.support.v7.app.AlertDialog customDialog;
 
     @Override
     public void setContentView(View view) {
@@ -51,6 +56,19 @@ public class BaseActivity extends AppCompatActivity {
 
         toast.setView(custom_view);
         toast.show();
+    }
+
+    public static void showLoading(Activity activity) {
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(activity).inflate(R.layout.loading, null);
+        final android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(activity, R.style.CustomDialog);
+        dialog.setView(view);
+        dialog.create();
+        dialog.setCancelable(false);
+        customDialog = dialog.show();
+    }
+
+    public static void hideLoading() {
+        customDialog.dismiss();
     }
 
 
