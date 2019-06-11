@@ -114,6 +114,10 @@ public class Utils {
         return true;
     }
 
+    public static boolean minSiete(EditText editText){
+        return editText.getText().toString().length() == 7;
+    }
+
     public static String dateTimeNowToString() {
         Date today = new Date();
         @SuppressLint("SimpleDateFormat")

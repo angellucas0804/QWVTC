@@ -171,6 +171,9 @@ public class AgregarEditarPerfilActivity extends BaseActivity {
         } else if (!Utils.esValidoSpinner(sp_turno)) {
             showToastError("Eliga su Turno");
             return false;
+        } else if (!Utils.minSiete(et_codigo_modular)) {
+            showToastError("El Código Modular debe tener 7 dígitos.");
+            return false;
         } else {
             return true;
         }

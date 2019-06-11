@@ -17,6 +17,7 @@ public class Constantes {
     public static final long PUNTAJE_SUMADO = 110;
 
     //public static final String BASE_URL = "http://devmovil.qaliwarma.gob.pe/QWVigila/Api/Registros/";
-    public static final String BASE_URL = "http://app.qaliwarma.gob.pe/QWVTC110/";
+    public static final String BASE_URL = "http://app.qaliwarma.gob.pe/QWVTC110/Api/Registros";
+    //public static final String BASE_URL = "http://devmovil.qaliwarma.gob.pe/QWVTC_REST/Api/Registros/";
 }
 
