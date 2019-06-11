@@ -4,7 +4,7 @@ apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "pe.gob.qw.vigilatucole"
+        applicationId "com.prismaperu.vigilatucole"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 2
