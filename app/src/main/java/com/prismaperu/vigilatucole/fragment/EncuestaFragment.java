@@ -2,11 +2,20 @@ package com.prismaperu.vigilatucole.fragment;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,10 +135,24 @@ public class EncuestaFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_encuesta, container, false);
         ButterKnife.bind(this, view);
-        tv_pregunta.setText(texto_pregunta);
         tv_numero_pregunta.setText(String.valueOf(numero_pregunta));
         rb_respuesta_si.setText(texto_respuesta.get(0));
         rb_respuesta_no.setText(texto_respuesta.get(1));
+
+        if (numero_pregunta == 9) {
+            SpannableStringBuilder longDescription = new SpannableStringBuilder();
+            longDescription.append("¿Hay alimentos que entrega Qali Warma que ");
+            int start = longDescription.length();
+            longDescription.append("NO LES GUSTA ");
+            longDescription.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorPrimary)), start, longDescription.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            longDescription.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), start, longDescription.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            longDescription.setSpan(new AbsoluteSizeSpan(32), start, longDescription.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            longDescription.append("?");
+            tv_pregunta.setText(longDescription);
+        } else {
+            tv_pregunta.setText(texto_pregunta);
+        }
+
         rb_respuesta_si.setCompoundDrawables(null, stringToDrawableRButton(imagen_respuesta.get(0)), null, null);
         rb_respuesta_no.setCompoundDrawables(null, stringToDrawableRButton(imagen_respuesta.get(1)), null, null);
         iv_portada.setImageResource(stringToDrawableImageView(portada));

@@ -1,6 +1,8 @@
 package com.prismaperu.vigilatucole;
 
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -13,12 +15,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -160,18 +169,21 @@ public class EncuestaActivity extends BaseActivity
     }
 
     public void verAlertDialog() {
-        new android.support.v7.app.AlertDialog.Builder(this)
-                .setTitle(getString(R.string.app_name))
-                .setCancelable(false)
-                .setIcon(R.drawable.ic_info_amarillo)
-                .setMessage("Recuerda que este formulario solo debe ser llenado por el niño o la niña.")
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                })
-                .show();
+
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(this).inflate(R.layout.dialog_info, null);
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(Objects.requireNonNull(this));
+        dialog.setView(view);
+        dialog.setCancelable(false);
+        AppCompatButton btn_Cerrar = view.findViewById(R.id.bt_close);
+        dialog.create();
+        final AlertDialog ad = dialog.show();
+
+        btn_Cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ad.dismiss();
+            }
+        });
 
     }
 

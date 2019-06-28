@@ -13,8 +13,9 @@
     <string name="que_alimentos_no_te_gusta">¿Que alimentos no te gusta?</string>
     <string name="agregar">Agregar</string>
     <string name="vigila_tu_cole">Vigila Tu Cole</string>
-    <string name="registra_el_progreso_de_tu_cole_ny_ay_danos_a_ayudarte">¡Registra el progreso de tu cole! \nY ayúdanos a ayudarte…</string>
+    <string name="registra_el_progreso_de_tu_cole_ny_ay_danos_a_ayudarte">¡Registra el progreso de tu cole!</string>
     <string name="inicio">inicio</string>
     <string name="c_digo_modular">Código Modular:</string>
     <string name="nombre_del_colegio">Nombre del Colegio</string>
+    <string name="recuerda_n_nesta_encuesta_debe_ser_llenada_solo_por_el_escolar_y_con_responsabilidad">RECUERDA:\n\nESTA ENCUESTA DEBE SER LLENADA SOLO POR EL ESCOLAR Y CON RESPONSABILIDAD.</string>
 </resources>

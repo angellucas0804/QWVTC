@@ -43,7 +43,7 @@
       "id": "1739b02c-e722-448e-ac87-e5a4455aa175",
       "orden": 2,
       "portada": "pregunta_2",
-      "texto": "¿Tú y tus compañeras(os) comen los alimentos de Qali Warma fuera del aula/comedor?",
+      "texto": "¿Tú y tus compañeras(os) comen los alimentos de Qali Warma dentro del aula o comedor?",
       "respuestas": [
         {
           "imagen": "agree",
@@ -61,7 +61,7 @@
       "id": "9be77ce8-f09c-4bb1-90dc-10ca15a1b7c5",
       "orden": 3,
       "portada": "pregunta_3",
-      "texto": "¿Hoy comieron los alimentos que Qali Warma debía entregar?",
+      "texto": "¿Sabes qué alimentos de Qali Warma debían entregar hoy?",
       "respuestas": [
         {
           "imagen": "agree",
