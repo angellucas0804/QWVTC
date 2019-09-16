@@ -17,5 +17,5 @@
     <string name="inicio">inicio</string>
     <string name="c_digo_modular">Código Modular:</string>
     <string name="nombre_del_colegio">Nombre del Colegio</string>
-    <string name="recuerda_n_nesta_encuesta_debe_ser_llenada_solo_por_el_escolar_y_con_responsabilidad">RECUERDA:\n\nESTA ENCUESTA DEBE SER LLENADA SOLO POR EL ESCOLAR Y CON RESPONSABILIDAD.</string>
+    <string name="recuerda_n_nesta_encuesta_debe_ser_llenada_solo_por_el_escolar_y_con_responsabilidad">ESTAS PREGUNTAS DEBEN\nSER RESPONDIDAS\nCON RESPONSABILIDAD\nPOR EL ESCOLAR.</string>
 </resources>

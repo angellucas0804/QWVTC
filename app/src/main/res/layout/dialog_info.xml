@@ -26,7 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="VIGILA TU COLE"
+            android:gravity="center"
+            android:text=" &quot; Vigila Tu Cole &quot; \n\n TE RECOMIENDA:"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@android:color/white"
             android:textSize="22sp"
@@ -46,8 +47,8 @@
 
         <TextView
             android:id="@+id/content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="3dp"
             android:text="@string/recuerda_n_nesta_encuesta_debe_ser_llenada_solo_por_el_escolar_y_con_responsabilidad"
             android:textAlignment="center"
